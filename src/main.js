@@ -31,12 +31,12 @@ class EarthObject {
   }
   lightSet() {
     const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
-    directionalLight.position.set(1, 1, 1);
-    const pointLight = new THREE.PointLight(0xffffff, 2, 1000);
+    directionalLight.position.set(10, 10, 10);
+    const pointLight = new THREE.PointLight(0xffffff, 10, 1000);
     pointLight.position.set(
-      500 * Math.sin(Date.now() / 500),
-      500 * Math.sin(Date.now() / 1000),
-      500 * Math.cos(Date.now() / 500)
+      100 * Math.sin(Date.now() / 500),
+      100 * Math.sin(Date.now() / 1000),
+      100 * Math.cos(Date.now() / 500)
     );
     const pointLightHelper = new THREE.PointLightHelper(pointLight, 30);
     this.scene.add(directionalLight, pointLight, pointLightHelper);
@@ -44,7 +44,7 @@ class EarthObject {
   createStarField() {
     // x,y,z座標の値がランダムに入った配列を500個生成
     const vertices = [];
-    for (let i = 0; i < 500; i++) {
+    for (let i = 0; i < 1000; i++) {
       const x = 3000 * (Math.random() - 0.5);
       const y = 3000 * (Math.random() - 0.5);
       const z = 3000 * (Math.random() - 0.5);
@@ -75,12 +75,21 @@ class EarthObject {
     this.renderer.render(this.scene, this.camera);
     requestAnimationFrame(() => this.tick());
   }
+  listener() {
+    window.addEventListener("resize", () => this.onWindowResize());
+  }
+  onWindowResize() {
+    this.camera.aspect = window.innerWidth / window.innerHeight;
+    this.camera.updateProjectionMatrix();
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
+  }
   init() {
     this.setup();
     this.createMesh();
     this.lightSet();
     this.createStarField();
     this.tick();
+    this.listener();
   }
 }
 
