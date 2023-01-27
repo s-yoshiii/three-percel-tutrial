@@ -1,4 +1,8 @@
-.center{
-    display: flex;
-    justify-content: center;
+@import '@acab/reset.css';
+body{
+    font-family: 'Times New Roman', Times, serif;
+}
+#app{
+    width: 100%;
+    height: 100%;
 }
